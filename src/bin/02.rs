@@ -69,6 +69,11 @@ fn main() -> Result<()> {
             println!("{:?}", level_differences);
             let level_diffs2 = report.windows(3).map(|pair| pair[2] - pair[0]).collect_vec();
             println!("{:?}", level_diffs2);
+
+            if (level_differences.iter().all(|x| x < &0) || level_differences.iter().all(|x| x > &0))
+                && level_differences.iter().map(|x| x.abs()).collect_vec().iter().all(|x| x <= &3 ){
+                answer += 1;
+            }
         }
 
         Ok(answer)
