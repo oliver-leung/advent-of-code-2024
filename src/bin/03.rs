@@ -20,13 +20,10 @@ fn main() -> Result<()> {
     println!("=== Part 1 ===");
 
     fn part1<R: BufRead>(reader: R) -> Result<usize> {
-        // TODO: Solve Part 1 of the puzzle
-        let mut answer = 0;
-
         let re = Regex::new(r"mul\((\d*),(\d*)\)")?;
-
+        
+        let mut answer = 0;
         let lines = reader.lines();
-
         for line in lines {
             re.captures_iter(&line?).for_each(|cap| {
                 let a: usize = cap[1].parse().unwrap();
@@ -49,7 +46,19 @@ fn main() -> Result<()> {
     println!("\n=== Part 2 ===");
     
     fn part2<R: BufRead>(reader: R) -> Result<usize> {
-        Ok(0)
+        let re = Regex::new(r"mul\((\d*),(\d*)\)")?;
+        
+        let mut answer = 0;
+        let lines = reader.lines();
+        for line in lines {
+            re.captures_iter(&line?).for_each(|cap| {
+                let a: usize = cap[1].parse().unwrap();
+                let b: usize = cap[2].parse().unwrap();
+                answer += a * b;
+            });
+        }
+
+        Ok(answer)
     }
     
     assert_eq!(48, part2(BufReader::new(TEST.as_bytes()))?);
